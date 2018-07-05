@@ -1,26 +1,26 @@
-FROM python:2-alpine3.7
+FROM phusion/baseimage
 
-ENV PGADMIN_VERSION=3.0 \
-    PYTHONDONTWRITEBYTECODE=1
+ENV PGADMIN_VERSION=3.1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    DEBIAN_FRONTEND=noninteractive
 
 # Install postgresql tools for backup/restore
-RUN apk add --no-cache postgresql \
- && cp /usr/bin/psql /usr/bin/pg_dump /usr/bin/pg_dumpall /usr/bin/pg_restore /usr/local/bin/ \
- && apk del postgresql
+RUN apt update -y \
+ && apt install --force-yes -y postgresql postgresql-contrib \
+ && apt install --force-yes -y python2.7 python2.7-dev
 
-RUN apk add --no-cache alpine-sdk postgresql-dev \
- && pip install --upgrade pip \
+RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
+  && python2.7 get-pip.py
+
+RUN apt install --force-yes -y build-essential autoconf libpq-dev
+
+RUN pip install --upgrade pip \
  && echo "https://ftp.postgresql.org/pub/pgadmin/pgadmin4/v${PGADMIN_VERSION}/pip/pgadmin4-${PGADMIN_VERSION}-py2.py3-none-any.whl" | pip install --no-cache-dir -r /dev/stdin \
- && apk del alpine-sdk \
- && addgroup -g 50 -S pgadmin \
- && adduser -D -S -h /pgadmin -s /sbin/nologin -u 1000 -G pgadmin pgadmin \
- && mkdir -p /pgadmin/config /pgadmin/storage \
- && chown -R 1000:50 /pgadmin
+ && mkdir -p /pgadmin/config /pgadmin/storage
 
 EXPOSE 5050
 
-COPY LICENSE config_distro.py /usr/local/lib/python2.7/site-packages/pgadmin4/
+COPY LICENSE config_distro.py /usr/local/lib/python2.7/dist-packages/pgadmin4/
 
-USER pgadmin:pgadmin
-CMD ["python", "./usr/local/lib/python2.7/site-packages/pgadmin4/pgAdmin4.py"]
+CMD ["python2.7", "./usr/local/lib/python2.7/dist-packages/pgadmin4/pgAdmin4.py"]
 VOLUME /pgadmin/
