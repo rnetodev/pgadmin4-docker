@@ -1,4 +1,4 @@
-FROM phusion/baseimage
+FROM ubuntu:16.04
 
 ENV PGADMIN_VERSION=3.1 \
     PYTHONDONTWRITEBYTECODE=1 \
