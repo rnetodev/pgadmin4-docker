@@ -6,15 +6,15 @@ ENV PGADMIN_VERSION=3.1 \
 
 # Install postgresql tools for backup/restore
 RUN apt-get update -y \
- && apt-get install --force-yes -y postgresql postgresql-contrib curl \
- && apt-get install --force-yes -y python2.7 python2.7-dev \
+ && apt-get install -y postgresql curl libpq-dev python2.7 python2.7-dev build-essential autoconf \
  && curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
  && python2.7 get-pip.py \
- && apt-get install --force-yes -y build-essential autoconf libpq-dev \
- && pip install --upgrade pip \
- && echo "https://ftp.postgresql.org/pub/pgadmin/pgadmin4/v${PGADMIN_VERSION}/pip/pgadmin4-${PGADMIN_VERSION}-py2.py3-none-any.whl" | pip install --no-cache-dir -r /dev/stdin \
- && mkdir -p /pgadmin/config /pgadmin/storage \
- && apt-get clean
+ && rm get-pip.py \
+ && curl "https://ftp.postgresql.org/pub/pgadmin/pgadmin4/v${PGADMIN_VERSION}/pip/pgadmin4-${PGADMIN_VERSION}-py2.py3-none-any.whl" -o "pgadmin4-${PGADMIN_VERSION}-py2.py3-none-any.whl" \
+ && pip install "pgadmin4-${PGADMIN_VERSION}-py2.py3-none-any.whl" \
+ && rm *.whl \
+ && apt-get clean \
+ && mkdir -p /pgadmin/config /pgadmin/storage
 
 EXPOSE 5050
 
