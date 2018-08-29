@@ -1,6 +1,6 @@
-FROM ubuntu:16.04
+FROM phusion/baseimage
 
-ENV PGADMIN_VERSION=3.1 \
+ENV PGADMIN_VERSION=3.2 \
     PYTHONDONTWRITEBYTECODE=1 \
     DEBIAN_FRONTEND=noninteractive
 
