@@ -44,8 +44,7 @@ DEFAULT_SERVER_PORT = int(os.getenv('PG_ADMIN_PORT', 5050))
 ##########################################################################
 
 SQLITE_PATH = os.path.join(DATA_DIR, 'config', 'pgadmin4.db')
-
-SESSION_DB_PATH = os.getenv('PG_ADMIN_SESSION_DIR', '/dev/shm/pgAdmin4_session')
+SESSION_DB_PATH = os.path.join(DATA_DIR, '/dev/shm/pgAdmin4_session')
 
 ##########################################################################
 # Upgrade checks
