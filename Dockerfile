@@ -1,4 +1,4 @@
-FROM phusion/baseimage
+FROM phusion/baseimage:master
 
 ENV PGADMIN_VERSION=3.3 \
     PYTHONDONTWRITEBYTECODE=1 \
