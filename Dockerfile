@@ -1,4 +1,4 @@
-FROM ubuntu:bionic
+FROM phusion/baseimage:master
 
 ENV PGADMIN_VERSION=3.3 \
     PYTHONDONTWRITEBYTECODE=1 \
@@ -13,6 +13,8 @@ RUN apt-get update -y \
  && curl "https://ftp.postgresql.org/pub/pgadmin/pgadmin4/v${PGADMIN_VERSION}/pip/pgadmin4-${PGADMIN_VERSION}-py2.py3-none-any.whl" -o "pgadmin4-${PGADMIN_VERSION}-py2.py3-none-any.whl" \
  && pip install "pgadmin4-${PGADMIN_VERSION}-py2.py3-none-any.whl" \
  && rm *.whl \
+ && apt-get remove --auto-remove build-essential autoconf -y \
+ && rm -rf /root/.cache \
  && apt-get clean autoclean \
  && apt-get autoremove -y \
  && rm -rf /var/lib/{apt,dpkg,cache,log}/ \
