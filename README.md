@@ -8,6 +8,6 @@
 ```
 
 docker pull rnetonet/pgadmin4
-docker run -d -v /opt/pgadmin:/pgadmin/ --net=host --restart=always --name pgadmin4 rnetonet/pgadmin4
+docker run --detach --volume /opt/pgadmin:/pgadmin/ --network=host --restart=always --name pgadmin4 rnetonet/pgadmin4
 
 ```
