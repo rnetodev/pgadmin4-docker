@@ -1,6 +1,6 @@
 FROM phusion/baseimage:master
 
-ENV PGADMIN_VERSION=3.5 \
+ENV PGADMIN_VERSION=3.6 \
     PYTHONDONTWRITEBYTECODE=1 \
     DEBIAN_FRONTEND=noninteractive
 
